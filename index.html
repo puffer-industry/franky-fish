@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Fruit</title>
+    <style>
+        * {margin: 0;padding: 0;}
+        body, #app {position: fixed;top:0;left:0;height:100%;width:100%;}
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- load canvas here -->
+    </div>
+    <script src="./src/app.js"></script>
+    <script src="./src/layer.js"></script>
+    <script src="./src/loader.js"></script>
+    <script src="./src/clients/fish.client.js"></script>
+    <script src="./src/functions.js"></script>
+
+    <script>
+        // alert('请用使用手机，或打开浏览器的手机模式！');
+        window.app = new App(document.getElementById('app'));
+        var imageLoader = new ImageLoader({
+            background: './images/background1.jpg',
+            fish0_1: './images/fishs/0.1.png',
+            fish0_2: './images/fishs/0.2.png',
+            fish0_3: './images/fishs/0.3.png',
+            fish0_4: './images/fishs/0.4.png',
+            fish1_1: './images/fishs/1.1.png',
+            fish1_2: './images/fishs/1.2.png',
+            fish1_3: './images/fishs/1.3.png',
+            fish2_1: './images/fishs/2.1.png',
+            fish2_2: './images/fishs/2.2.png',
+            fish2_3: './images/fishs/2.3.png',
+            fish2_4: './images/fishs/2.4.png',
+        });
+
+        imageLoader.load().then(images => {
+            app.set('images', images);
+
+            backgroundLayer();
+            testFish();
+        });
+
+        app.start();
+    </script>
+</body>
+</html>
