@@ -19,30 +19,39 @@
     <script src="./src/loader.js"></script>
     <script src="./src/clients/fish.client.js"></script>
     <script src="./src/functions.js"></script>
+    <script src="./src/clients/randFish.client.js"></script>
+    <script src="./src/clients/player.client.js"></script>
+    <script src="./src/clients/controller.client.js"></script>
 
     <script>
         // alert('请用使用手机，或打开浏览器的手机模式！');
         window.app = new App(document.getElementById('app'));
         var imageLoader = new ImageLoader({
+            player: './images/player.png',
             background: './images/background1.jpg',
-            fish0_1: './images/fishs/0.1.png',
-            fish0_2: './images/fishs/0.2.png',
-            fish0_3: './images/fishs/0.3.png',
-            fish0_4: './images/fishs/0.4.png',
-            fish1_1: './images/fishs/1.1.png',
-            fish1_2: './images/fishs/1.2.png',
-            fish1_3: './images/fishs/1.3.png',
-            fish2_1: './images/fishs/2.1.png',
-            fish2_2: './images/fishs/2.2.png',
-            fish2_3: './images/fishs/2.3.png',
-            fish2_4: './images/fishs/2.4.png',
+            fish_0_0: './images/fishs/0.1.png',
+            fish_0_1: './images/fishs/0.2.png',
+            fish_0_2: './images/fishs/0.3.png',
+            fish_0_3: './images/fishs/0.4.png',
+            fish_1_0: './images/fishs/1.1.png',
+            fish_1_1: './images/fishs/1.2.png',
+            fish_1_2: './images/fishs/1.3.png',
+            fish_2_0: './images/fishs/2.1.png',
+            fish_2_1: './images/fishs/2.4.png',
         });
 
         imageLoader.load().then(images => {
-            app.set('images', images);
+            app.set('images', pixelReverseArray(images));
+            app.set('levels', {
+                level1: [45, 30],
+                level2: [95, 60]
+            });
 
             backgroundLayer();
-            testFish();
+            var playerClient = playerLayer();
+
+
+            app.listen(new RandFishClient());
         });
 
         app.start();

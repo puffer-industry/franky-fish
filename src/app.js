@@ -21,6 +21,7 @@
      * @property {Object} state
      */
     function app(element) {
+        this.counter = 0;
         this.element = element;
         this.data = new Object();
         this.clients = [];
@@ -43,15 +44,21 @@
     };
 
     app.prototype.listen = function(client) {
-        this.clients.push(client);
+        client.id = this.counter++;
+        this.clients[client.id] = client;
+        this.clients[client.id] = client;
     };
+
+    app.prototype.detach = function(client) {
+        delete this.clients[client.id];
+    }
 
     app.prototype.step = function() {
         var step = (timestamp) => {
             if (this.isStarted()) {
-                this.clients.forEach(client => {
-                    client.update(timestamp);
-                });
+                for (var key in this.clients) {
+                    this.clients[key].update(timestamp);
+                }
                 window.requestAnimationFrame(step);
             }
         };
