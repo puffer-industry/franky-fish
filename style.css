@@ -1,0 +1,88 @@
+* {margin: 0;padding: 0;}
+body, #app, #share-board {position: fixed;top:0;left:0;height:100%;width:100%;}
+#controller {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 999;
+    transform:rotate(45deg);
+    -ms-transform:rotate(45deg);
+    -moz-transform:rotate(45deg);
+    -webkit-transform:rotate(45deg);
+    -o-transform:rotate(45deg);
+    border-radius: 100%;
+}
+#controller span {
+    float: left;
+    width: 48%;
+    height: 48%;
+    border: 1px solid #333;
+    background: rgba(56, 11, 73, 0.4);
+}
+#share-board {
+    z-index: 9999;
+    display: block;
+    background: url(./images/load.jpg);
+    background-repeat:no-repeat;
+    background-size:100% 100%;
+    -moz-background-size:100% 100%;
+}
+#share-board h1 {
+    position: relative;
+    color: white;
+    text-align: center;
+    top: 20%;
+    padding: 1rem 0 1rem 0;
+}
+#share-board .bar {
+    position: relative;
+    top: 30%;
+    margin: 0 auto;
+    width: 70%;
+    height: 2rem;
+    border-radius: 10px;
+    border: 0;
+    box-shadow:0 0 16px rgb(119, 189, 255);
+}
+#loader {
+    display: block;
+    background: rgba(106, 166, 223, 0.8);
+    height: 2rem;
+    width: 0;
+    border-radius: 10px;
+}
+#start-game {
+    position: fixed;
+    display: none;
+    top: 70%;
+    width: 100px;
+    height: 45px;
+    border-radius: 6px;
+    border: 0;
+    left: 50%;
+    margin-left: -50px;
+    color: white;
+    font-weight: bold;
+    background: rgba(48, 86, 167, 0.541);
+    box-shadow:0 0 16px rgb(119, 189, 255);
+}
+
+.score-board {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 5rem;
+    padding: .5rem auto .5rem auto;
+    z-index: 999;
+    vertical-align: middle;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    font-size: 1.3rem;
+    box-shadow:0 0 16px rgb(119, 189, 255);
+}
+
+#score {
+    width: 100%;
+    height: 100%;
+}

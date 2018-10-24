@@ -22,6 +22,7 @@
      */
     function app(element) {
         this.counter = 0;
+        this.score = 0;
         this.element = element;
         this.data = new Object();
         this.clients = [];
@@ -29,6 +30,7 @@
         this.state = {
             on: false
         };
+        this.scoreElement = document.getElementById('score');
     }
 
     app.prototype.set = function(key, value) {
@@ -43,6 +45,15 @@
         this.element.appendChild(dom);
     };
 
+    app.prototype.getScore = function() {
+        return this.score;
+    };
+
+    app.prototype.addScore = function(score) {
+        this.score += score;
+        this.scoreElement.innerText = this.score;
+    };
+
     app.prototype.listen = function(client) {
         client.id = this.counter++;
         this.clients[client.id] = client;
@@ -52,6 +63,15 @@
     app.prototype.detach = function(client) {
         delete this.clients[client.id];
     }
+
+    app.prototype.clearClients = function() {
+        for (var key in this.clients) {
+            if (this.clients[key].terminate) {
+                this.clients[key].terminate();
+            }
+        }
+        this.clients = [];
+    };
 
     app.prototype.step = function() {
         var step = (timestamp) => {
@@ -72,6 +92,7 @@
 
     app.prototype.stop = function() {
         this.state.on = false;
+        console.info('stop');
     };
 
     app.prototype.isStarted = function() {

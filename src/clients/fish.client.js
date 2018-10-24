@@ -13,6 +13,7 @@
         this.speed = (direction === 'left') ? -speed : speed;
         this.level = level;
         this.image = image;
+        this.colliable = true;
 
         this.state = {
             timestamp: 0,
@@ -56,7 +57,6 @@
     fishClient.prototype.terminate = function() {
         app.detach(this);
         this.layer.terminate();
-        console.info('terminated: ' + this.id);
     };
 
     window.FishClient = fishClient;

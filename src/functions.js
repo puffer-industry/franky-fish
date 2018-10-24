@@ -16,6 +16,16 @@ function playerLayer() {
     return playerClient;
 }
 
+function controllerLayer(playerClient) {
+    var controllerClient = new ControllerClient(playerClient)
+    controllerClient.setHtmlId('controller');
+    var dom = controllerClient.getdom();
+    dom.style.height = dom.style.width = (app.numericals.height * (3/9)) + 'px';
+    app.append(dom);
+    app.listen(controllerClient);
+    return controllerClient;
+}
+
 function pixelReverseArray(images) {
     var newImages = [];
     for (var key in images) {
