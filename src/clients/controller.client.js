@@ -113,6 +113,10 @@
         this.player.handleWait();
     };
 
+    controllerClient.prototype.terminate = function() {
+        app.element.removeChild(this.element);
+    };
+
     window.ControllerClient = controllerClient;
 
 })(window, window.document);
