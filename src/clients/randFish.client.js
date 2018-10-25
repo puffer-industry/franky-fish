@@ -1,12 +1,13 @@
 (function(window, document) {
     "use strict"
 
-    function randFishClient() {
+    function randFishClient(layer) {
         this.timestamp = 0;
+        this.layer = layer;
     }
 
     randFishClient.prototype.update = function(timestamp) {
-        if (timestamp - this.timestamp > 1000) {
+        if (timestamp - this.timestamp > 1300) {
             var images = app.get('images');
             var level = getRandomNumber(3);
             var number = getRandomNumber(4);
@@ -30,10 +31,9 @@
     };
 
     randFishClient.prototype.newFish = function(image, level, direction, y) {
-        var layer = new Layer(app.numericals.width, app.numericals.height);
         var x = direction == 'left' ? app.numericals.width + image.width : 0 - image.width;
         var fishClient = new FishClient(
-            layer,
+            this.layer,
             image,
             x,
             y,
@@ -42,7 +42,7 @@
             2
         );
         app.listen(fishClient);
-        app.append(layer.getdom());
+        app.append(this.layer.getdom());
     }
 
     randFishClient.prototype.terminate = function() {

@@ -20,40 +20,41 @@
 
         this.buildElements();
         this.player.handleWait();
+        this.timestamp = 0;
     }
 
     controllerClient.prototype.update = function(timestamp) {
-        this.collisionDetection();
+        if (timestamp - this.timestamp >= 50) {
+            this.collisionDetection();
+            this.timestamp = timestamp;
+        }
     };
 
     controllerClient.prototype.collisionDetection = function() {
         for (var index in app.clients) {
             var client = app.clients[index];
             if (client.colliable) {
-                var halfHeight = client.image.height / 2;
-                var halfWidth = client.image.width / 2;
-                var centerX = client.state.x + halfWidth;
-                var centerY = client.state.y + halfHeight;
-                var playerData = this.player.center();
-                var a = Math.abs(centerX - playerData.x);
-                var b = Math.abs(centerY - playerData.y);
-                var c = Math.pow(a, 2) + Math.pow(b, 2);
-                if (c < Math.pow(halfHeight + playerData.r, 2)) {
-                    if (client.getLevel() < this.player.getLevel()) {
-                        app.addScore(1);
-                        this.player.handleScore();
-                        client.terminate();
-                    } else {
-                        this.player.terminate();
-                        app.clearClients();
-                        app.stop();
-                        var shareBoard = document.getElementById('share-board');
-                        var startGame = document.getElementById('start-game');
-                        startGame.innerText = 'Play Again';
-                        shareBoard.style.display = 'block';
-                    }
+                if (collision(this.player, client)) {
+                    this.onCollision(client);
                 }
             }
+        }
+    };
+
+    controllerClient.prototype.onCollision = function(client) {
+        if (client.getLevel() < this.player.getLevel()) {
+            app.addScore(1);
+            this.player.handleScore();
+            client.terminate();
+        } else {
+            this.player.terminate();
+            app.clearClients();
+            app.stop();
+            var shareBoard = document.getElementById('share-board');
+            var startGame = document.getElementById('start-game');
+            startGame.innerText = 'Play Again';
+            shareBoard.style.display = 'block';
+            window.layer.terminate();
         }
     };
 

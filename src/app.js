@@ -23,14 +23,16 @@
     function app(element) {
         this.counter = 0;
         this.score = 0;
-        this.element = element;
         this.data = new Object();
         this.clients = [];
         this.numericals = getNumericalValue();
-        this.state = {
-            on: false
-        };
         this.scoreElement = document.getElementById('score');
+        element.ontouchstart = element.ontouchmove = function(event) {
+            event.preventDefault();
+        };
+        this.element = element;
+
+        this.state = {on: false};
     }
 
     app.prototype.set = function(key, value) {

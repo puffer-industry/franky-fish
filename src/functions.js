@@ -8,8 +8,7 @@ function backgroundLayer() {
     app.append(layer.getdom());
 }
 
-function playerLayer() {
-    var layer = new Layer(app.numericals.width, app.numericals.height);
+function playerLayer(layer) {
     var playerClient = new PlayerClient(layer, app.numericals.width / 2, app.numericals.height / 2);
     app.listen(playerClient);
     app.append(layer.getdom());
@@ -48,4 +47,20 @@ function pixelReverse(image) {
 
 function getRandomNumber(max){
     return Math.floor(Math.random() * (max + 1));
+}
+
+function requestFullScreen(element) {
+    var requestMethod = element.requestFullScreen ||
+    element.webkitRequestFullScreen ||
+    element.mozRequestFullScreen ||
+    element.msRequestFullScreen;
+    if (requestMethod) {
+        requestMethod.call(element);
+    }
+    else if (typeof window.ActiveXObject !== "undefined") {
+        var wscript = new ActiveXObject("WScript.Shell");
+        if (wscript !== null) {
+            wscript.SendKeys("{F11}");
+        }
+    }
 }

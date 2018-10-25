@@ -14,6 +14,7 @@
         this.level = level;
         this.image = image;
         this.colliable = true;
+        this.radius = image.height / 2;
 
         this.state = {
             timestamp: 0,
@@ -24,17 +25,20 @@
     }
 
     fishClient.prototype.update = function(timestamp) {
-        if (this.boundaryDetection()) {
-            return this.terminate();
-        }
+        if (timestamp - this.state.timestamp > 15) {
+            if (this.boundaryDetection()) {
+                return this.terminate();
+            }
 
-        this.render(
-            this.image,
-            this.state.x,
-            this.state.y
-        );
-        this.state.lastX = this.state.x;
-        this.state.x += this.speed;
+            this.render(
+                this.image,
+                this.state.x,
+                this.state.y
+            );
+            this.state.lastX = this.state.x;
+            this.state.x += this.speed;
+            this.state.timestamp = timestamp;
+        }
     };
 
     fishClient.prototype.boundaryDetection = function() {
@@ -49,14 +53,21 @@
         return this.level;
     };
 
+    fishClient.prototype.getPosition = function() {
+        return {
+            x: this.state.x,
+            y: this.state.y
+        }
+    };
+
     fishClient.prototype.render = function(image, x, y) {
         this.ctx.clearRect(this.state.lastX, y, image.width, image.height);
         this.ctx.drawImage(image, x, y);
     };
 
     fishClient.prototype.terminate = function() {
+        this.ctx.clearRect(this.state.x, this.state.y, this.image.width, this.image.height)
         app.detach(this);
-        this.layer.terminate();
     };
 
     window.FishClient = fishClient;

@@ -32,12 +32,23 @@
     }
 
     playerClient.prototype.update = function(timestamp) {
-        this.render();
-        this.state.lastX = this.state.x;
-        this.state.x += this.state.speedX * this.state.acceleration;
-        this.state.lastY = this.state.y;
-        this.state.y += this.state.speedY * this.state.acceleration;
-        this.speedUpCushion(0.05);
+        if (timestamp - this.state.timestamp > 10) {
+            this.render();
+            this.state.lastX = this.state.x;
+            this.state.x += this.state.speedX * this.state.acceleration;
+            this.state.lastY = this.state.y;
+            this.state.y += this.state.speedY * this.state.acceleration;
+            this.speedUpCushion(0.05);
+            this.state.timestamp = timestamp;
+        }
+    };
+
+    playerClient.prototype.getWidth = function() {
+        return this.state.level[0];
+    };
+
+    playerClient.prototype.getHeight = function() {
+        return this.state.level[1];
     };
 
     playerClient.prototype.speedUpCushion = function(speed) {
@@ -100,14 +111,16 @@
         this.state.level = currentLevel;
     }
 
-    playerClient.prototype.center = function() {
-        var w = this.state.level[0];
+    playerClient.prototype.getRadius = function() {
         var h = this.state.level[1];
-        var halfWidth = w / 2;
-        var halfHeight = h / 2;
-        var centerX = this.state.x + halfWidth;
-        var centerY = this.state.y + halfHeight;
-        return {x: centerX, y: centerY, r: halfHeight};
+        return h / 2;
+    };
+
+    playerClient.prototype.getPosition = function() {
+        return {
+            x: this.state.x,
+            y: this.state.y
+        }
     };
 
     playerClient.prototype.setCurrentImage = function() {
@@ -131,7 +144,6 @@
 
     playerClient.prototype.terminate = function() {
         app.detach(this);
-        this.layer.terminate();
     };
 
     window.PlayerClient = playerClient;

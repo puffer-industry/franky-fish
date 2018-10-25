@@ -23,6 +23,7 @@
     </div>
     <script src="./src/app.js"></script>
     <script src="./src/layer.js"></script>
+    <script src="./src/collision.js"></script>
     <script src="./src/loader.js"></script>
     <script src="./src/clients/fish.client.js"></script>
     <script src="./src/functions.js"></script>
@@ -32,7 +33,6 @@
 
     <script>
         // alert('请用使用手机，或打开浏览器的手机模式！');
-        window.app = new App(document.getElementById('app'));
         var imageLoader = new ImageLoader({
             player: './images/player.png',
             background: './images/background2.jpg',
@@ -69,24 +69,31 @@
             loader.style.width = (per * imageLoader._count) + '%';
         });
 
-        app.set('levels', {
-            level1: [45, 30, 1.1, 0],
-            level2: [90, 50, 2.1, 10],
-            level3: [105, 70, 3.1, 20],
-            level4: [135, 90, 4.1, 40]
-        });
-
         imageLoader.load().then(images => {
-            app.set('images', pixelReverseArray(images));
 
             var startGame = document.getElementById('start-game');
             startGame.style.display = 'block';
             startGame.onclick = (e) => {
-                backgroundLayer();
-                document.getElementById('share-board').style.display = 'none';
-                controllerLayer(playerLayer());
-                app.listen(new RandFishClient());
-                app.start();
+                requestFullScreen(document.documentElement);
+
+                setTimeout(() => {
+                    window.app = new App(document.getElementById('app'));
+                    app.set('levels', {
+                        level1: [45, 30, 1.1, 0],
+                        level2: [90, 50, 2.1, 10],
+                        level3: [105, 70, 3.1, 20],
+                        level4: [135, 90, 4.1, 40]
+                    });
+
+                    app.set('images', pixelReverseArray(images));
+                    app.set('fishPixels', {});
+                    window.layer = new Layer(app.numericals.width, app.numericals.height);
+                    backgroundLayer();
+                    document.getElementById('share-board').style.display = 'none';
+                    controllerLayer(playerLayer(layer));
+                    app.listen(new RandFishClient(layer));
+                    app.start();
+                }, 500);
             };
         });
     </script>
