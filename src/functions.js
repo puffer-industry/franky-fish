@@ -64,3 +64,12 @@ function requestFullScreen(element) {
         }
     }
 }
+
+function screenListener() {
+    var _alert = document.getElementById('alert');
+    if (document.body.clientWidth < document.body.clientHeight) {
+        _alert.style.display = 'block';
+    } else {
+        _alert.style.display = 'none';
+    }
+};
