@@ -8,6 +8,7 @@
     <title>Franky Fish</title>
 </head>
 <body>
+    <div id="alert"><h1>请使用横屏！</h1></div>
     <div id="share-board">
         <h1>Franky Fish</h1>
         <div class="bar">
@@ -96,6 +97,9 @@
                 }, 500);
             };
         });
+
+        window.onresize = screenListener;
+        screenListener();
     </script>
 </body>
 </html>
