@@ -79,6 +79,11 @@
 
                 setTimeout(() => {
                     window.app = new App(document.getElementById('app'));
+                    var shareBoard = document.getElementById('share-board');
+                    shareBoard.style.display = 'none';
+
+                    app.set('images', pixelReverseArray(images));
+                    app.set('fishPixels', {});
                     app.set('levels', {
                         level1: [45, 30, 1.1, 0],
                         level2: [90, 50, 2.1, 10],
@@ -86,13 +91,12 @@
                         level4: [135, 90, 4.1, 40]
                     });
 
-                    app.set('images', pixelReverseArray(images));
-                    app.set('fishPixels', {});
-                    window.layer = new Layer(app.numericals.width, app.numericals.height);
                     backgroundLayer();
-                    document.getElementById('share-board').style.display = 'none';
-                    controllerLayer(playerLayer(layer));
-                    app.listen(new RandFishClient(layer));
+                    controllerLayer(
+                        playerLayer(app.layer)
+                    );
+
+                    app.listen(new RandFishClient(app.layer));
                     app.start();
                 }, 500);
             };

@@ -31,6 +31,10 @@
             event.preventDefault();
         };
         this.element = element;
+        this.layer = new Layer(
+            this.numericals.width,
+            this.numericals.height
+        );
 
         this.state = {on: false};
     }

@@ -54,7 +54,7 @@
             var startGame = document.getElementById('start-game');
             startGame.innerText = 'Play Again';
             shareBoard.style.display = 'block';
-            window.layer.terminate();
+            app.layer.terminate();
         }
     };
 
