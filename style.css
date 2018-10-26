@@ -14,8 +14,8 @@ body, #app, #share-board, #alert {position: fixed;top:0;left:0;height:100%;width
 }
 #controller span {
     float: left;
-    width: 48%;
-    height: 48%;
+    width: 47%;
+    height: 47%;
     border: 1px solid #333;
     background: rgba(56, 11, 73, 0.4);
 }
