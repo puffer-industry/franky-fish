@@ -80,7 +80,7 @@
     };
 
     app.prototype.step = function() {
-        var step = (timestamp) => {
+        var step = function(timestamp) {
             if (this.isStarted()) {
                 for (var key in this.clients) {
                     this.clients[key].update(timestamp);
@@ -88,6 +88,7 @@
                 window.requestAnimationFrame(step);
             }
         };
+        step = step.bind(this);
         return step;
     };
 
