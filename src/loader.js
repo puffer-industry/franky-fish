@@ -13,12 +13,16 @@
     }
 
     imageLoader.prototype.loadByFileName = function(key, fileName) {
-        return new Promise((resolve, reject) => {
+        return new Promise((function(resolve, reject) {
             var image = new Image();
             image.setAttribute('src', fileName);
-            image.onload = () => resolve(this.onImageLoad(event, key));
-            image.onabort = (event) => reject(event);
-        });
+            image.onload = (function() {
+                return resolve(this.onImageLoad(event, key));
+            }.bind(this));
+            image.onabort = (function(event) {
+                reject(event);
+            }.bind(this));
+        }).bind(this));
     };
 
     imageLoader.prototype.onImageLoad = function(event, key) {
@@ -39,7 +43,9 @@
     };
 
     imageLoader.prototype.load = function() {
-        return Promise.all(this.promises).then((images) => this.data);
+        return Promise.all(this.promises).then((function(images) {
+            return this.data
+        }).bind(this));
     };
 
     window.ImageLoader = imageLoader;

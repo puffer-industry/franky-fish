@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="./style.css">
+    <script src="./src/es6-promise.auto.min.js"></script>
     <title>Franky Fish</title>
 </head>
 <body>
@@ -60,7 +61,7 @@
             fish_4_0: './images/fishs/4.1.png',
         });
         imageLoader._count = 0;
-        imageLoader.onEachLoaded((image, key) => {
+        imageLoader.onEachLoaded(function(image, key) {
             var loader = document.getElementById('loader');
             var length = Object.keys(imageLoader.files).length;
             var per = 1 / length * 100;
@@ -70,14 +71,14 @@
             loader.style.width = (per * imageLoader._count) + '%';
         });
 
-        imageLoader.load().then(images => {
+        imageLoader.load().then(function(images) {
 
             var startGame = document.getElementById('start-game');
             startGame.style.display = 'block';
-            startGame.onclick = (e) => {
+            startGame.onclick = function(e) {
                 requestFullScreen(document.documentElement);
 
-                setTimeout(() => {
+                setTimeout(function() {
                     window.app = new App(document.getElementById('app'));
                     var shareBoard = document.getElementById('share-board');
                     shareBoard.style.display = 'none';
